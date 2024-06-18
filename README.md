@@ -1,0 +1,1 @@
+This dialogue tool is crafted to simulate the dynamics that influence the evolution of opinions and behaviors among individuals (agents) within a community over time. By generating different scenarios within the tool, users can explore the intricate dynamics and potential risks of community division. The tool is now available in English, Spanish, and Portuguese.
