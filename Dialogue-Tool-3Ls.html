@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dialogue Tool - Level 2 Default</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .title-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 48px;
+      margin-right: 10px;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      display: none; /* Hide the "Dialogue Tool" text */
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .buttons button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #e0e0e0;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .buttons button:hover {
+      background-color: #d0d0d0;
+    }
+
+    .buttons button.active {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100vh - 64px);
+      border: none;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .buttons {
+        justify-content: flex-start;
+        margin-top: 10px;
+      }
+
+      .buttons button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="title-container">
+      <img src="https://incite-dem.eu/wp-content/uploads/2023/05/INCITE-DEM_logo-color.png" alt="Logo" class="logo">
+      <div class="title">Dialogue Tool</div>   
+    </div>
+
+    <div class="buttons">
+      <button id="btnL1" onclick="loadTool('L1')">Level 1</button>
+      <button id="btnL2" class="active" onclick="loadTool('L2')">Level 2</button>
+      <button id="btnL3" onclick="loadTool('L3')">Level 3</button>
+    </div>
+  </div>
+
+  <iframe id="dialogueFrame" src="https://shaoni-wang.github.io/incite-dem/Dialogue-tool-L2.html"></iframe>
+
+  <script>
+    function loadTool(level) {
+      const urls = {
+        L1: 'https://shaoni-wang.github.io/incite-dem/Dialogue-Tool-L1.html',
+        L2: 'https://shaoni-wang.github.io/incite-dem/Dialogue-Tool-L2.html',
+        L3: 'https://shaoni-wang.github.io/incite-dem/Dialogue-tool-L3.html'
+      };
+
+      document.getElementById('dialogueFrame').src = urls[level];
+
+      document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('btn' + level).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
