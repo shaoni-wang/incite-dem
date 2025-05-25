@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dialogue Tool</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .title-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 56px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      flex-direction: column;
+      z-index: 999;
+      min-width: 180px;
+    }
+
+    .dropdown-menu button {
+      padding: 8px 12px;
+      border: none;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .dropdown-menu button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .dropdown.open .dropdown-menu {
+      display: flex;
+    }
+
+    .lang-button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #e0e0e0;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .lang-button:hover {
+      background-color: #d0d0d0;
+    }
+
+    .lang-button.active {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100vh - 64px);
+      border: none;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .buttons {
+        justify-content: flex-start;
+        margin-top: 10px;
+      }
+
+      .buttons button,
+      .dropdown-toggle {
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        left: 0;
+        right: auto;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="title-container">
+      <img src="https://incite-dem.eu/wp-content/uploads/2023/05/INCITE-DEM_logo-color.png" alt="Logo" class="logo" />
+    </div>
+
+    <div class="buttons">
+      <div class="dropdown" id="dropdownEnglish">
+        <button class="dropdown-toggle" onclick="toggleDropdown()">🌐 English ▼</button>
+        <div class="dropdown-menu">
+          <button onclick="loadTool('L1')">Level 1: Beginner</button>
+          <button onclick="loadTool('L2')" class="active">Level 2: Intermediate</button>
+          <button onclick="loadTool('L3')">Level 3: Advanced</button>
+        </div>
+      </div>
+      <button class="lang-button" id="btnItalian" onclick="loadTool('Italian')">🇮🇹 Italiana</button>
+      <button class="lang-button" id="btnPortuguese" onclick="loadTool('Portuguese')">🇵🇹 Português</button>
+    </div>
+  </header>
+
+  <iframe id="dialogueFrame" src="https://shaoni-wang.github.io/incite-dem/Dialogue-Tool-L2.html"></iframe>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("dropdownEnglish").classList.toggle("open");
+    }
+
+    function loadTool(level) {
+      const urls = {
+        L1: 'https://shaoni-wang.github.io/incite-dem/Dialogue-Tool-L1.html',
+        L2: 'https://shaoni-wang.github.io/incite-dem/Dialogue-Tool-L2.html',
+        L3: 'https://shaoni-wang.github.io/incite-dem/Dialogue-Tool-L3.html',
+        Italian: 'https://shaoni-wang.github.io/incite-dem/strumento-di-dialogo.html',
+        Portuguese: 'https://shaoni-wang.github.io/incite-dem/ferramenta-de-dialogo.html'
+      };
+
+      document.getElementById('dialogueFrame').src = urls[level];
+
+      // Close dropdown if open
+      document.getElementById("dropdownEnglish").classList.remove("open");
+
+      // Reset active classes
+      document.querySelectorAll('.dropdown-menu button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.lang-button').forEach(btn => btn.classList.remove('active'));
+
+      // Highlight active button
+      if (level.startsWith('L')) {
+        // Level number: 1, 2, or 3
+        const levelNumber = parseInt(level.charAt(1));
+        // Select nth-child in dropdown-menu (1-based)
+        document.querySelector(`.dropdown-menu button:nth-child(${levelNumber})`).classList.add('active');
+      } else {
+        document.getElementById('btn' + level).classList.add('active');
+      }
+    }
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', function(e) {
+      if (!document.getElementById('dropdownEnglish').contains(e.target)) {
+        document.getElementById("dropdownEnglish").classList.remove("open");
+      }
+    });
+  </script>
+</body>
+</html>
